@@ -3,6 +3,9 @@ box: php:7.1.20-fpm-jessie
 build:
   # Step that will be executed on build
   steps:
+    # Install packages required
+    - install-packages:
+        packages: git zip unzip libfreetype6-dev cron libjpeg62-turbo-dev libmcrypt-dev libpng12-dev libxml2-dev libxslt1-dev libicu-dev mysql-client xmlstarlet
     # Test the project
     - script:
         name: Prepare AuthKey for Magento Download via composer
@@ -11,6 +14,7 @@ build:
            cp $WERCKER_SOURCE_DIR/auth.json $HOME/.composer
            sed -i "s/PUBKEY/$MAGENTOPUBKEY/g" $HOME/.composer/auth.json
            sed -i "s/PRIVKEY/$MAGENTOPRIVKEY/g" $HOME/.composer/auth.json
+           cat $HOME/.composer/auth.json
     - script:
         name: Install composer
         code: |
