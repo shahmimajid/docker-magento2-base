@@ -31,7 +31,6 @@ build:
            cp $WERCKER_SOURCE_DIR/auth.json $HOME/.composer
            sed -i "s/PUBKEY/$MAGENTOPUBKEY/g" $HOME/.composer/auth.json
            sed -i "s/PRIVKEY/$MAGENTOPRIVKEY/g" $HOME/.composer/auth.json
-           cat $HOME/.composer/auth.json
     - script:
         name: Install composer
         code: |
