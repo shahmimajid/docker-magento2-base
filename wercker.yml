@@ -8,7 +8,7 @@ build:
         name: Prepare for Magento Download
         code: |
            mkdir -p $HOME\.config\composer
-           cp $WERCKER_SOURCE_DIR\auth.json $HOME\.config\composer\.
+           ls -ltrh $HOME\.config\composer
     - script:
         name: CMD
         code: pwd   
