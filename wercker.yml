@@ -5,8 +5,8 @@ build:
   steps:
     # Test the project
     - script:
-        name: Testing PHP
-        code: php -v 
+        name: echo home
+        code: echo $HOME
     - script:
         name: CMD
         code: pwd   
