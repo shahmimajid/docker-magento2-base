@@ -41,3 +41,14 @@ build:
            cd $WERCKER_SOURCE_DIR/src
            rm -rf .gitkeep
            composer create-project --repository=https://repo.magento.com/ magento/project-community-edition .
+buildDocker:
+    - internal/docker-build: 
+        dockerfile: Dockerfile
+        image-name: base-image # name used to refer to this image until it's pushed
+    # Push to Docker Hub       
+    - internal/docker-push: 
+        image-name: base-image
+        username: $USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
+        password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
+        repository: docker.io/$USERNAME/docker-magento2-base
+        tag: latest
