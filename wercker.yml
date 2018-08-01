@@ -5,8 +5,9 @@ build:
   steps:
     # Test the project
     - script:
-        name: echo home
-        code: echo $HOME
+        name: Prepare for Magento Download
+        code: |
+           mkdir -p $
     - script:
         name: CMD
         code: pwd   
