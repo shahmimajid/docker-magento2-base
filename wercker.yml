@@ -19,4 +19,5 @@ build:
         name: Download Magento via composer
         code: |
            cd $WERCKER_SOURCE_DIR/src
+           rm -rf .gitkeep
            composer create-project --repository=https://repo.magento.com/ magento/project-community-edition .
