@@ -6,4 +6,4 @@ build:
     # Test the project
     - script:
         name: Testing PHP
-        code: php -v   
+        code: echo "Hello Worl"   
