@@ -48,7 +48,7 @@ buildDocker:
     # Push to Docker Hub       
     - internal/docker-push: 
         image-name: base-image
-        username: $USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
-        password: $PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
-        repository: docker.io/$USERNAME/docker-magento2-base
+        username: $DOCKER_USERNAME # Docker Hub username. When using CLI, set using "export X_USERNAME=<username>"  
+        password: $DOCKER_PASSWORD # Docker Hub password. When using CLI, set using "export X_PASSWORD=<password>" 
+        repository: docker.io/$DOCKER_USERNAME/docker-magento2-base
         tag: latest
