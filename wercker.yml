@@ -1,0 +1,9 @@
+box: php:7.1.20-fpm-jessie
+## Build Definition
+build:
+  # Step that will be executed on build
+  steps:
+    # Test the project
+    - script:
+        name: Testing PHP
+        code: php -v   
