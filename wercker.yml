@@ -9,9 +9,8 @@ build:
         code: |
            mkdir -p $HOME/.config/composer
            cp $WERCKER_SOURCE_DIR/auth.json $HOME/.config/composer
-           echo $MAGENTOPUBKEY
-           cat $HOME/.config/composer/auth.json
            sed -i "s/PUBKEY/$MAGENTOPUBKEY/g" $HOME/.config/composer/auth.json
+           sed -i "s/PRIVKEY/$MAGENTOPRIVKEY/g" $HOME/.config/composer/auth.json
            cat $HOME/.config/composer/auth.json
     - script:
         name: CMD
