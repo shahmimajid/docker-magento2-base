@@ -7,8 +7,12 @@ build:
     - script:
         name: Prepare for Magento Download
         code: |
-           mkdir -p $HOME\.config\composer
-           ls -ltrh $HOME\.config\composer
+           mkdir -p $HOME/.config/composer
+           cp $WERCKER_SOURCE_DIR/auth.json $HOME/.config/composer
+           echo $MAGENTOPUBKEY
+           cat $HOME/.config/composer/auth.json
+           sed -i "s/PUBKEY/$MAGENTOPUBKEY/g" $HOME/.config/composer/auth.json
+           cat $HOME/.config/composer/auth.json
     - script:
         name: CMD
-        code: pwd   
+        code: echo $MAGENTOPUBKEY   
