@@ -41,7 +41,7 @@ build:
            cd $WERCKER_SOURCE_DIR/src
            rm -rf .gitkeep
            composer create-project --repository=https://repo.magento.com/ magento/project-community-edition .
-buildDocker:
+    #Docker Build       
     - internal/docker-build: 
         dockerfile: Dockerfile
         image-name: base-image # name used to refer to this image until it's pushed
