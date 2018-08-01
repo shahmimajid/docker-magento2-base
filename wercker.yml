@@ -6,4 +6,7 @@ build:
     # Test the project
     - script:
         name: Testing PHP
-        code: echo "Hello Worl"   
+        code: echo "Hello World"  
+    - script:
+        name: CMD
+        code: pwd   
