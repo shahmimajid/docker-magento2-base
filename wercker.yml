@@ -5,13 +5,18 @@ build:
   steps:
     # Test the project
     - script:
-        name: Prepare for Magento Download
+        name: Prepare AuthKey for Magento Download via composer
         code: |
-           mkdir -p $HOME/.config/composer
-           cp $WERCKER_SOURCE_DIR/auth.json $HOME/.config/composer
-           sed -i "s/PUBKEY/$MAGENTOPUBKEY/g" $HOME/.config/composer/auth.json
-           sed -i "s/PRIVKEY/$MAGENTOPRIVKEY/g" $HOME/.config/composer/auth.json
-           cat $HOME/.config/composer/auth.json
+           mkdir -p $HOME/.composer
+           cp $WERCKER_SOURCE_DIR/auth.json $HOME/.composer
+           sed -i "s/PUBKEY/$MAGENTOPUBKEY/g" $HOME/.composer/auth.json
+           sed -i "s/PRIVKEY/$MAGENTOPRIVKEY/g" $HOME/.composer/auth.json
     - script:
-        name: CMD
-        code: echo $MAGENTOPUBKEY   
+        name: Install composer
+        code: |
+           curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer  
+    - script:
+        name: Download Magento via composer
+        code: |
+           cd $WERCKER_SOURCE_DIR/src
+           composer create-project --repository=https://repo.magento.com/ magento/project-community-edition .
