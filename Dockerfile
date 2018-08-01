@@ -1,4 +1,4 @@
-# Base image is PHP 7.1.20 fpm jessie
+# Base image is nginx-php-fpm
 FROM richarvey/nginx-php-fpm:latest
 LABEL company="ShahmiMajid Corp"
 LABEL maintainer="info@shahmimajid.com"
