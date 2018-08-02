@@ -1,0 +1,62 @@
+box: php:7.1.20-fpm-jessie
+## Build Definition
+build:
+  # Step that will be executed on build
+  steps:
+    # Install packages required
+    - install-packages:
+        packages: git zip unzip libfreetype6-dev cron libjpeg62-turbo-dev libmcrypt-dev libpng12-dev libxml2-dev libxslt1-dev libicu-dev mysql-client xmlstarlet
+    # Test the project
+    - script: 
+        name: Configure Docker php with GD
+        code: |
+           docker-php-ext-install -j$(nproc) bcmath
+           docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+           docker-php-ext-install -j$(nproc) gd
+           docker-php-ext-install -j$(nproc) json
+           docker-php-ext-install -j$(nproc) iconv
+           docker-php-ext-install -j$(nproc) mcrypt
+           docker-php-ext-install -j$(nproc) mbstring
+           docker-php-ext-install -j$(nproc) pcntl
+           docker-php-ext-install -j$(nproc) soap
+           docker-php-ext-install -j$(nproc) xsl
+           docker-php-ext-install -j$(nproc) zip
+           docker-php-ext-install -j$(nproc) intl
+           docker-php-ext-install -j$(nproc) pdo
+           docker-php-ext-install -j$(nproc) pdo_mysql
+    - script:
+        name: Prepare AuthKey for Magento Download via composer
+        code: |
+           mkdir -p $HOME/.composer
+           cp $WERCKER_SOURCE_DIR/auth.json $HOME/.composer
+           sed -i "s/PUBKEY/$MAGENTOPUBKEY/g" $HOME/.composer/auth.json
+           sed -i "s/PRIVKEY/$MAGENTOPRIVKEY/g" $HOME/.composer/auth.json
+    - script:
+        name: Install composer
+        code: |
+           curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer  
+    - script:
+        name: Download Magento via composer
+        code: |
+           cd $WERCKER_SOURCE_DIR/src
+           rm -rf .gitkeep
+           composer create-project --repository=https://repo.magento.com/ magento/project-community-edition .
+    - script:
+        name: Setup Magento User permission
+        code: |
+           cd $WERCKER_SOURCE_DIR/src
+           find var vendor pub/static pub/media app/etc -type f -exec chmod u+w {} \;
+           find var vendor pub/static pub/media app/etc -type d -exec chmod u+w {} \;
+           chmod u+x bin/magento
+           chown -R www-data:www-data /var/www/
+    #Docker Build       
+    - internal/docker-build: 
+        dockerfile: Dockerfile
+        image-name: base-image # name used to refer to this image until it's pushed
+    # Push to Docker Hub       
+    - internal/docker-push: 
+        image-name: base-image
+        username: $DOCKER_USERNAME # Docker Hub username. 
+        password: $DOCKER_PASSWORD # Docker Hub password.  
+        repository: docker.io/$DOCKER_USERNAME/docker-magento2-base
+        tag: latest
