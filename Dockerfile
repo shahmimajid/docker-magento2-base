@@ -6,11 +6,7 @@ ENV MAGENTO_VERSION 2.2.10
 ENV INSTALL_DIR /var/www/html
 ENV COMPOSER_HOME /var/www/.composer/
 
-COPY ./auth.json $COMPOSER_HOME
-RUN sed -i "s/PUBKEY/$MAGENTOPUBKEY/g" $COMPOSER_HOME/auth.json && sed -i "s/PRIVKEY/$MAGENTOPRIVKEY/g" $COMPOSER_HOME/auth.json
-RUN curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer
-RUN requirements="libpng12-dev libmcrypt-dev libmcrypt4 libcurl3-dev libfreetype6 libjpeg-turbo8 libjpeg-turbo8-dev libpng12-dev libfreetype6-dev libicu-dev libxslt1-dev" \
+RUN requirements="libpng12-dev libmcrypt-dev libmcrypt4 libcurl3-dev libfreetype6 libjpeg-turbo8 libjpeg-turbo8-dev libpng12-dev libfreetype6-dev libicu-dev libxslt1-dev curl git cron" \
     && apt-get update \
     && apt-get install -y $requirements \
     && rm -rf /var/lib/apt/lists/* \
@@ -25,3 +21,9 @@ RUN requirements="libpng12-dev libmcrypt-dev libmcrypt4 libcurl3-dev libfreetype
     && docker-php-ext-install soap \
     && requirementsToRemove="libpng12-dev libmcrypt-dev libcurl3-dev libpng12-dev libfreetype6-dev libjpeg-turbo8-dev" \
     && apt-get purge --auto-remove -y $requirementsToRemove
+
+COPY ./auth.json $COMPOSER_HOME
+RUN sed -i "s/PUBKEY/$MAGENTOPUBKEY/g" $COMPOSER_HOME/auth.json && sed -i "s/PRIVKEY/$MAGENTOPRIVKEY/g" $COMPOSER_HOME/auth.json
+RUN cat $COMPOSER_HOME/auth.json
+RUN curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer

@@ -3,15 +3,14 @@ box: debian
 build:
   # Step that will be executed on build
   steps:
-    
-    #Docker Build       
+    #Docker Build - Apache2+Php7      
     - internal/docker-build: 
-        dockerfile: Dockerfile
-        image-name: base-image # name used to refer to this image until it's pushed
+        dockerfile: Dockerfile-apachephp7
+        image-name: apache2-image # name used to refer to this image until it's pushed
     # Push to Docker Hub       
     - internal/docker-push: 
-        image-name: base-image
+        image-name: apache2-image
         username: $DOCKER_USERNAME # Docker Hub username. 
         password: $DOCKER_PASSWORD # Docker Hub password.  
-        repository: docker.io/$DOCKER_USERNAME/docker-magento2-base
+        repository: docker.io/$DOCKER_USERNAME/apache2-php7
         tag: latest
