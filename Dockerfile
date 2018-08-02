@@ -1,5 +1,5 @@
 # Base image is nginx-php-fpm
-FROM bitnami/php-fpm:7.1-debian-9
+FROM mshahmi/apache2-php7
 LABEL maintainer="Shahmi Majid"
 
 ENV MAGENTO_VERSION 2.2.10
