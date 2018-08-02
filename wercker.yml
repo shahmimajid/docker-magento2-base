@@ -3,6 +3,12 @@ box: debian
 build:
   # Step that will be executed on build
   steps:
+    - script:
+        name: Prepare AuthKey for Magento Download via composer
+        code: |
+           sed -i "s/PUBKEY/$MAGENTOPUBKEY/g" $WERCKER_SOURCE_DIR/auth.json
+           sed -i "s/PRIVKEY/$MAGENTOPRIVKEY/g" $WERCKER_SOURCE_DIR/auth.json
+           cat $WERCKER_SOURCE_DIR/auth.json
     #Docker Build - Apache2+Php7      
     - internal/docker-build: 
         dockerfile: Dockerfile
