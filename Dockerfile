@@ -10,6 +10,7 @@ RUN requirements="libpng12-dev libmcrypt-dev libmcrypt4 libcurl3-dev libfreetype
     && apt-get update \
     && apt-get install -y $requirements \
     && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-install bcmath \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd \
@@ -33,7 +34,6 @@ RUN chown -R www-data:www-data /var/www
 RUN cd /var/www/html
 RUN pwd
 RUN su www-data -c "composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition ."
-
 RUN cd $INSTALL_DIR \
     && find . -type d -exec chmod 770 {} \; \
     && find . -type f -exec chmod 660 {} \; \
