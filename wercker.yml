@@ -5,12 +5,12 @@ build:
   steps:
     #Docker Build - Apache2+Php7      
     - internal/docker-build: 
-        dockerfile: Dockerfile-apache2-php7
-        image-name: apache2-image # name used to refer to this image until it's pushed
+        dockerfile: Dockerfile
+        image-name: base-image # name used to refer to this image until it's pushed
     # Push to Docker Hub       
     - internal/docker-push: 
-        image-name: apache2-image
+        image-name: base-image
         username: $DOCKER_USERNAME # Docker Hub username. 
         password: $DOCKER_PASSWORD # Docker Hub password.  
-        repository: docker.io/$DOCKER_USERNAME/apache2-php7
+        repository: docker.io/$DOCKER_USERNAME/docker-magento2-base
         tag: latest
