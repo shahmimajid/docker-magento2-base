@@ -2,7 +2,7 @@
 
 su www-data <<EOSU
 
-ln -s ~/.composer/auth.json /var/www/html/var/composer_home/
+ln -s /var/www/.composer/auth.json /var/www/html/var/composer_home/
 
 /var/www/html/bin/magento sampledata:deploy
 
