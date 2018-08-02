@@ -41,6 +41,14 @@ build:
            cd $WERCKER_SOURCE_DIR/src
            rm -rf .gitkeep
            composer create-project --repository=https://repo.magento.com/ magento/project-community-edition .
+    - script:
+        name: Setup Magento User permission
+        code: |
+           cd /var/www/html/
+           find var vendor pub/static pub/media app/etc -type f -exec chmod u+w {} \;
+           find var vendor pub/static pub/media app/etc -type d -exec chmod u+w {} \;
+           chmod u+x bin/magento
+           chown -R www-data:www-data /var/www/
     #Docker Build       
     - internal/docker-build: 
         dockerfile: Dockerfile
