@@ -30,7 +30,8 @@ RUN curl -sS https://getcomposer.org/installer | php \
 RUN chsh -s /bin/bash www-data
 
 RUN chown -R www-data:www-data /var/www
-RUN su www-data -c "composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition $INSTALL_DIR
+RUN cd /var/www/html
+RUN su www-data -c "composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition . 
 
 RUN cd $INSTALL_DIR \
     && find . -type d -exec chmod 770 {} \; \
