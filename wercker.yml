@@ -5,7 +5,7 @@ build:
   steps:
     #Docker Build - Apache2+Php7      
     - internal/docker-build: 
-        dockerfile: Dockerfile-apachephp7
+        dockerfile: Dockerfile-apache2-php7
         image-name: apache2-image # name used to refer to this image until it's pushed
     # Push to Docker Hub       
     - internal/docker-push: 
