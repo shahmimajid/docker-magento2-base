@@ -2,6 +2,8 @@
 
 [![wercker status](https://app.wercker.com/status/888d07ab366a399e0b0ecf906284fe38/s/ "wercker status")](https://app.wercker.com/project/byKey/888d07ab366a399e0b0ecf906284fe38)
 
+[![Docker build](http://dockeri.co/image/mshahmi/docker-magento2-base)](https://hub.docker.com/r/mshahmi/docker-magento2-base/)
+
 ## Introduction
 This is where we baked our Magento2 Base Image due to download the file using composer is time consuming.
 
